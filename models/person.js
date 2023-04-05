@@ -11,8 +11,22 @@ mongoose.connect(url).then(result => {
 })
 
 const personSchema = new mongoose.Schema({
-    name: String,
-    number: String
+    name: {
+        type: String,
+        minLength: 3,
+        maxLength: 50,
+        required: true
+    },
+    number: {
+        type: String,
+        minLength: 8,
+        maxLength: 50,
+        required: true,
+        validate: {
+            validator: (n) => /^(\d{2}|\d{3})-\d+$/.test(n),
+            message: 'invalid phone number'
+        }
+    }
 })
 
 
